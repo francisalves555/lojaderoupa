@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head'%}
+    <link href={% static 'css/cadastro_produtos.css'%} rel='stylesheet'>
+{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="bloco-total">
+
+    <div class="bloco-info">
+        <form action="{% url 'editar_produtos' prod_info.id %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="bloco-fot-info">
+            <div class="bloco-input-text">
+            
+                <label class="texto-label"> Nome do produto:</label>
+                <input class="input-cad" type="text" name="nome" value="{{prod_info.nome}}">
+
+                <label class="texto-label"> Preço do fornecedor:</label>
+                <input class="input-cad" type="text" name="valor" id="preco_fornecedor" value="{{prod_info.valor}}">
+
+                <label class="texto-label"> Lucro em %:</label>
+                <input class="input-cad" type="text" name="porcentagem" id="porcentagem" value="{{prod_info.porcentagem}}">
+
+                <label class="texto-label"> Valor do lucro:</label>
+                <input class="input-cad" type="text" name="lucro" id="lucro" readonly>
+
+                <label class="texto-label"> Preço de venda:</label>
+                <input class="input-cad" type="text" name="venda" id="venda" readonly>
+
+                <label class="texto-label"> Código do produto:</label>
+                <input class="input-cad" type="text" name="codigo" value="{{prod_info.codigo}}">
+
+                <label class="texto-label"> Categoria:</label>
+                <select class="input-cad" name="categoria">
+                    {% for cat_infos in cat_info %}
+                        <option value="{{cat_infos.id}}"{% if prod_info.categoria.id == cat_infos.id %}selected{% endif %}>{{cat_infos.nome}}</option>
+                    {% endfor %}
+                </select>
+                <label class="texto-label"> Marca:</label>
+                <select class="input-cad" name="marca">
+                    {% for mar_infos in mar_info %}
+                        <option value="{{mar_infos.id}}" {% if prod_info.marca.id == mar_infos.id %}selected{% endif %}>{{mar_infos.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            {% if prod_info.foto %}
+            <img src="{{prod_info.foto.url}}" width="200" class="edt-foto">
+            {% else %}
+            <img src="{% static 'img/falta.png'%}"  class="edt-foto">
+            {% endif %}
+        </div>
+        <div class="enviar-foto">
+            <input type="FILE" name="foto" class="enviar-foto">
+        </div>
+        <button class="btn-cadastro"> Cadastrar </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var precoFornecedorInput = document.getElementById("preco_fornecedor");
+        var porcentagemInput = document.getElementById("porcentagem");
+        var lucroInput = document.getElementById("lucro");
+        var vendaInput = document.getElementById("venda");
+    
+        function calculateValor() {
+            var precoFornecedor = parseFloat(precoFornecedorInput.value.replace(',', '.')) || 0;
+            var porcentagem = parseFloat(porcentagemInput.value.replace(',', '.')) || 0;
+    
+            var lucro = (precoFornecedor * (porcentagem / 100));
+            var venda = lucro + precoFornecedor;
+            lucroInput.value = lucro.toFixed(2).replace('.', ',');
+            vendaInput.value = venda.toFixed(2).replace('.',',');
+        }
+    
+        precoFornecedorInput.addEventListener("input", calculateValor);
+        porcentagemInput.addEventListener("input", calculateValor);
+
+        calculateValor();
+    });
+</script>
+
+{% endblock %}

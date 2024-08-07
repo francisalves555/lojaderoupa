@@ -1,0 +1,38 @@
+.text-foto {
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+    
+}
+
+.edt-foto {
+    justify-content: center;
+    object-fit: contain;
+}
+
+.enviar-foto {
+    margin: 10px 0px;
+    display: flex;
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+.bloco-info {
+    width: 70%;
+    justify-content: center;
+    border-radius: 20px;
+}
+.bloco-input-text {
+    justify-content: center;
+}
+@media (max-width: 768px) {
+    .text-foto {
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+    }
+    .bloco-info {
+        width: 100%;
+        justify-content: center;
+        border-radius: 20px;
+    }
+}

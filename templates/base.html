@@ -1,0 +1,56 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% block 'head' %}
+    
+    {% endblock %}
+  </head>
+<body>
+  <div class="w3-sidebar w3-bar-block w3-collapse w3-card" style="width:200px;" id="mySidebar">
+    <button class="w3-bar-item w3-button w3-hide-large"
+    onclick="w3_close()">Fechar &times;</button>
+    <a href="#" class="w3-bar-item w3-button">VENDA</a>
+    <a href="{% url 'venda_produtos' %}" class="w3-bar-item w3-button">• Produtos</a>
+    <a href="#" class="w3-bar-item w3-button">ADICIONAR</a>
+    <a href="{% url 'cadastro_produtos' %}" class="w3-bar-item w3-button">• Produtos</a>
+    <a href="{% url 'cadastro_clientes' %}" class="w3-bar-item w3-button">• Clientes</a>
+    <a href="{% url 'cadastro_estoques' %}" class="w3-bar-item w3-button">• Estoque</a>
+    <a href="{% url 'cadastro_categorias' %}" class="w3-bar-item w3-button">• Categorias e Marcas</a>
+    <a href="#" class="w3-bar-item w3-button">LISTA</a>
+    <a href="{% url 'lista_produtos' %}" class="w3-bar-item w3-button">• Produtos</a>
+    <a href="{% url 'lista_clientes' %}" class="w3-bar-item w3-button">• Clientes</a>
+    <a href="{% url 'lista_estoques' %}" class="w3-bar-item w3-button">• Estoque</a>
+    <a href="{% url 'lista_categorias' %}" class="w3-bar-item w3-button">• Categorias e Marcas</a>
+
+
+    
+  </div>
+      
+  <div class="w3-main" style="margin-left:200px">
+      
+    <div class="w3-teal">
+        <button class="w3-button w3-teal w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
+      <div class="w3-container">
+        <span class="titulo">Sistema de cadastro</span>
+      </div>
+    </div>
+          {% block 'conteudo' %}
+          {% endblock 'conteudo' %}
+  </div>
+   
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+</body>

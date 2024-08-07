@@ -1,0 +1,24 @@
+.bloco-fot-info {
+    display:flex;
+    flex-direction: row;
+}
+
+@media (max-width: 768px) {
+    .bloco-fot-info {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.edt-foto {
+    max-width: 500px; /* Define a largura máxima */
+    width: 90%; /* Define a largura desejada */
+    height: auto; /* Ajusta a altura automaticamente conforme a largura */
+    object-fit: contain; /* Garante que a imagem seja contida dentro do contêiner sem ser cortada */
+}
+
+@media (max-width: 768px) {
+    .edt-foto {
+        width: 300px;
+    }
+}

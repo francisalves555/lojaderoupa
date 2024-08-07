@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head'%}
+    <link href={% static 'css/cadastro_produtos.css'%} rel='stylesheet'>
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="bloco-total">
+
+    <div class="bloco-info">
+        <form action="{% url 'cadastro_produtos' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="bloco-input-text">
+            
+            <div class="juntar-linha">
+                <label class="texto-label"> Nome do produto:</label>
+                <input class="input-cad" type="text" name="nome">
+            
+                <label class="texto-label"> Preço do fornecedor:</label>
+                <input class="input-cad" type="text" name="valor" id="preco_fornecedor" >
+            </div>
+
+            <div class="juntar-linha">
+                <label class="texto-label"> Lucro em %:</label>
+                <input class="input-cad" type="text" name="porcentagem" id="porcentagem">
+            
+                <label class="texto-label"> Valor do lucro:</label>
+                <input class="input-cad" type="text" name="lucro" id="lucro" readonly>
+
+                <label class="texto-label"> Preço de venda:</label>
+                <input class="input-cad" type="text" name="venda" id="venda" readonly>
+            </div>
+
+            <div class="juntar-linha">
+                <label class="texto-label"> Qnt. estoque:</label>
+                <input class="input-cad" type="text" name="estoque">
+
+                <label class="texto-label"> Data compra:</label>
+                <input class="input-cad" type="date" name="data">
+            </div>
+            <div class="juntar-linha">
+                <label class="texto-label"> Categoria:</label>
+                <select class="input-cad" name="categoria">
+                    {% for categoria in categorias %}
+                        <option value="{{categoria.id}}">{{categoria.nome}}</option>
+                    {% endfor %}
+                </select>
+
+                <label class="texto-label"> Marca:</label>
+                <select class="input-cad" name="marca">
+                    {% for marca in marcas %}
+                        <option value="{{marca.id}}">{{marca.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="juntar-linha">
+                <label class="texto-label"> Código do produto:</label>
+                        <input class="input-cad" type="text" name="codigo">
+                <div class="enviar-foto">
+                    <input type="FILE" name="foto">
+                </div>
+            </div>
+        </div>
+        <button class="btn-cadastro"> Cadastrar </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var precoFornecedorInput = document.getElementById("preco_fornecedor");
+        var porcentagemInput = document.getElementById("porcentagem");
+        var lucroInput = document.getElementById("lucro");
+        var vendaInput = document.getElementById("venda");
+    
+        function calculateValor() {
+            var precoFornecedor = parseFloat(precoFornecedorInput.value.replace(',', '.')) || 0;
+            var porcentagem = parseFloat(porcentagemInput.value.replace(',', '.')) || 0;
+    
+            var lucro = (precoFornecedor * (porcentagem / 100));
+            var venda = lucro + precoFornecedor;
+            lucroInput.value = lucro.toFixed(2).replace('.', ',');
+            vendaInput.value = venda.toFixed(2).replace('.',',');
+        }
+    
+        precoFornecedorInput.addEventListener("input", calculateValor);
+        porcentagemInput.addEventListener("input", calculateValor);
+    });
+</script>
+
+{% endblock %}

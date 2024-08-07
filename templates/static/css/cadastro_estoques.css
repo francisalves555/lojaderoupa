@@ -1,0 +1,88 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f8f9fa;
+}
+
+.junta-tab {
+    display: flex;
+    flex-direction: row;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    margin: 0px;
+}
+.tab-1{
+    width: 80%;
+    display: flex;
+    margin: 10px;
+}
+
+.tab-2{
+    display: flex;
+    margin: 10px;
+}
+
+thead {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e9ecef;
+}
+
+td img {
+    display: block;
+    margin: auto;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Diminui o tamanho da fonte */
+    }
+    th, td {
+        padding: 8px; /* Reduz o espaçamento interno */
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        display: block;
+        overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+        white-space: nowrap; /* Impede quebra de linha dentro das células */
+    }
+
+    thead {
+        display: none; /* Oculta o cabeçalho para dispositivos muito pequenos */
+    }
+
+    tbody, tr, td {
+        display: block;
+        width: 100%;
+    }
+
+    td {
+        text-align: right; /* Alinha o texto à direita para melhor legibilidade */
+        position: relative;
+    }
+
+    td::before {
+        content: attr(data-label); /* Adiciona o rótulo da coluna */
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+}

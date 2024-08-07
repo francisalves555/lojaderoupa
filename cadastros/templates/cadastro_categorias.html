@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+<link href="{% static 'css/cadastro_categorias.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="bloco-total">
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="bloco-info">
+        <form action="{% url 'cadastro_categorias' %}" method='POST' enctype="multipart/form-data"> {% csrf_token %}
+        <div class="bloco-input-text">
+            <label class="texto-label"> Digite o nome da categoria:</label>
+            <input class="input-cad" type="text" name="nome-c">
+        </div>
+        <div class="enviar-foto">
+            <input type="file" name="foto-c">
+        </div>
+        <button class="btn-cadastro"> Cadastrar </button>
+    </form>
+    </div>
+
+    <div class="bloco-info">
+        <form action="{% url 'cadastro_categorias' %}" method='POST' enctype="multipart/form-data"> {% csrf_token %}
+        <div class="bloco-input-text">
+            <label class="texto-label"> Digite o nome da marca:</label>
+            <input class="input-cad" type="text" name="nome-m">
+        </div>
+        <div class="enviar-foto">
+            <input type="file" name="foto-m">
+        </div>
+        <button class="btn-cadastro"> Cadastrar </button>
+    </form>
+    </div>
+</div>
+    
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cadastro_filters %}
+
+{% block 'head' %}
+<link href="{% static 'css/lista_produtos.css '%}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Valor</th>
+            <th>Estoque</th>
+            <th>Código</th>
+            <th>Categoria</th>
+            <th>Marca</th>
+            <th>Foto</th>
+        </tr>
+    </thead>
+<tbody>
+    {% for todos_prods in todos_prod %}
+    <tr>
+        <td><a href="{% url 'editar_produtos' todos_prods.id %}">{{todos_prods.nome}}</a></td>
+        <td>R$ {{todos_prods.venda}}</td>
+        <td>{{total_estoque|get_item:todos_prods.id}}</td>
+        <td>{{todos_prods.codigo}}</td>
+        <td>{{todos_prods.categoria}}</td>
+        <td>{{todos_prods.marca}}</td>
+        {% if todos_prods.foto %}
+            <td><img src="{{todos_prods.foto.url}}" width="50"></td>
+        {% else %}
+            <td><img src="{% static 'img/falta.png' %}" width="50"></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

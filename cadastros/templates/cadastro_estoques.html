@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cadastro_filters %}
+
+{% block 'head' %}
+    <link href="{% static 'css/cadastro_estoques.css'%}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="bloco-total">
+    <div class="bloco-info">
+        <div class="juntar-linha">
+            <form action="{% url 'cadastro_estoques' %}" method="POST"> {% csrf_token %}
+                <input type="hidden" id="produto-id" name="produto_id">
+                <input class="input-cad" type="text" name="estoque" placeholder="Quantidade em estoque">
+                <input class="input-cad" type="date" name="data">
+                <button class="btn-cadastro">Cadastrar</button>
+            
+        </div></form>
+        <div class="junta-tab">
+            <div class="tab-1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Estoque total</th>
+                            <th>Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for todos_prods in todos_prod %}
+                        <tr data-prod-id="{{ todos_prods.id }}">
+                            <td>{{ todos_prods.nome }}</td>
+                            <td>{{estoque_total|get_item:todos_prods.id}}</td>
+                            <td><img src="{{ todos_prods.foto.url }}" width="50"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-2">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody id="estoque-details">
+                           
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.tab-1 tbody tr').forEach(function(row) {
+            row.addEventListener('click', function() {
+                var prodId = this.getAttribute('data-prod-id');
+                document.getElementById('produto-id').value = prodId;
+                fetch('/cadastros/get_estoque/' + prodId + '/')
+                    .then(response => response.json())
+                    .then(data => {
+                        var tbody = document.getElementById('estoque-details');
+                        tbody.innerHTML = '';
+                        data.forEach(item => {
+                            var tr = document.createElement('tr');
+                            var tdDate = document.createElement('td');
+                            var tdStock = document.createElement('td');
+                            tdDate.textContent = item.data;
+                            tdStock.textContent = item.estoque;
+                            tr.appendChild(tdDate);
+                            tr.appendChild(tdStock);
+                            tbody.appendChild(tr);
+                        });
+                    });
+            });
+        });
+    });
+</script>
+
+{% endblock %}

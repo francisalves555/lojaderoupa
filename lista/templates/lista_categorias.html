@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head'%}
+    <link href={% static 'css/lista_categorias.css'%} rel='stylesheet'>
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="titulo-cat">Categorias</div>
+    <div class="bloco-total">
+        <div class="bloco-categoria">
+            {% for todos_cates in todos_cate %}
+                <div class="categoria">
+                    <div class="categoria-info">
+                        <span class="categoria-text">{{todos_cates}}</span>
+                        <a href={% url 'editar_categorias' todos_cates.id %}><img src= "{{todos_cates.foto.url}}" class="categoria-foto"></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+<div class="titulo-cat">Marcas</div>
+    <div class="bloco-total">
+        <div class="bloco-categoria">
+            {% for todos_marcs in todos_marc %}
+                <div class="categoria">
+                    <div class="categoria-info">
+                        <span class="categoria-text">{{todos_marcs}}</span>
+                        <a href={% url 'editar_marcas' todos_marcs.id %}><img src= "{{todos_marcs.foto.url}}" class="categoria-foto"></a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

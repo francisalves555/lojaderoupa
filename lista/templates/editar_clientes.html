@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link href="{% static 'css/cadastro_clientes.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="bloco-total">
+    <form action="{% url 'editar_clientes' cliente_info.id %}" method="POST"> {% csrf_token %}
+    <div class="bloco-info">
+        <div class="bloco-input-text">
+            <label class="texto-label"> Digite o nome:</label>
+            <input class="input-cad" type="text" name="nome" value="{{cliente_info.nome}}">
+
+            <label class="texto-label"> CPF:</label>
+            <input class="input-cad" type="text" name="cpf" id="cpf" maxlength="14" value="{{cliente_info.cpf}}">
+
+            <label class="texto-label"> Telefone:</label>
+            <input class="input-cad" type="text" name="telefone" value="{{cliente_info.telefone}}">
+
+            <label class="texto-label"> Endereço:</label>
+            <input class="input-cad" type="text" name="endereco" value="{{cliente_info.endereco}}">
+
+            <label class="texto-label"> Data de nascimento:</label>
+            <input class="input-cad" type="date" name="nascimento" value="{{cliente_info.nascimento|date:'Y-m-d' }}">
+        </div>
+        <button class="btn-cadastro"> Editar </button>
+    </div>
+    </form>
+</div>
+<script>
+    document.getElementById('cpf').addEventListener('input', function (e) {
+        let value = e.target.value;
+        value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca o primeiro ponto
+        value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca o segundo ponto
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Coloca o traço
+        e.target.value = value;
+    });
+</script>
+{% endblock %}

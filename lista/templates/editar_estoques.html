@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link href="{% static 'css/cadastro_clientes.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="bloco-total">
+    <form action="{% url 'editar_estoques' estoque.id %}" method="POST"> {% csrf_token %}
+    <div class="bloco-info">
+        <div class="bloco-input-text">
+            <label class="texto-label"> Nome do produto:{{estoque.produto.nome}}</label>
+
+            <label class="texto-label"> Estoque:</label>
+            <input class="input-cad" type="text" name="estoque" value="{{estoque.estoque}}">
+
+            <label class="texto-label"> Data de compra do estoque:</label>
+            <input class="input-cad" type="date" name="data" value="{{estoque.data|date:'Y-m-d' }}">
+        </div>
+        <button class="btn-cadastro"> Editar </button>
+    </div>
+    </form>
+</div>
+{% endblock %}

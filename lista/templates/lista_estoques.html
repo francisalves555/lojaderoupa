@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block 'head' %}
+<link href="{% static 'css/lista_produtos.css '%}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Estoque</th>
+        </tr>
+    </thead>
+<tbody>
+    {% for todos_estoque in todos_estoques %}
+    <tr>
+        <td><a href="{% url 'editar_estoques' todos_estoque.id %}">{{todos_estoque.produto.nome}}</a></td>
+        <td>{{todos_estoque.data}}</td>
+        <td>{{todos_estoque.estoque}}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

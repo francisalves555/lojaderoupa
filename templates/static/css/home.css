@@ -1,0 +1,178 @@
+.w3-sidebar {
+    background-color: #322030 !important;
+}
+
+.w3-container, .w3-teal, .w3-hover-teal:hover {
+    background-color: #322030 !important;
+
+}
+
+.w3-bar-block .w3-bar-item {
+    color: white;
+}
+
+.titulo {
+    font-weight: 700;
+    font-family: inherit;
+    text-transform: uppercase;
+}
+
+body {
+    background-color: #e3cebd;
+}
+
+.bloco-total {
+    padding: 10px;
+    background-color: #e3cebd;
+    
+}
+
+.bloco-info{
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    padding: 20px;
+    box-shadow: rgba(40, 41, 61, 0.04) 0px 1px 2px, rgba(96, 97, 112, 0.16) 0px 2px 4px;
+}
+
+.bloco-input-text {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.juntar-linha {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 20px auto;
+}
+
+.input-cad {
+    flex-grow: 1;
+    padding: 7px 8px;
+    margin: auto 10px auto 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    max-width: 40%;
+}
+
+.texto-label {
+    color: #7a7a7a;
+    margin: 10px 0px 0px 0px;
+}
+
+.btn-cadastro,
+.btn-del {
+    display: block; /* Garante que o botão seja centralizado */
+    width: 200px; /* Aumenta a largura do botão */
+    height: 50px; /* Aumenta a altura do botão */
+    border-radius: 10px;
+    border: none; /* Remove a borda padrão */
+    color: #fff; /* Ajusta a cor do texto para um branco puro */
+    font-size: 18px; /* Aumenta o tamanho da fonte */
+    font-weight: bold; /* Torna o texto em negrito */
+    cursor: pointer; /* Adiciona um cursor de pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Adiciona uma transição suave */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
+    margin: 10px; /* Adiciona margem entre os botões */
+}
+
+.btn-cadastro {
+    background-color: #322030;
+}
+
+.btn-cadastro:hover {
+    background-color: #725b75; /* Altera a cor de fundo no hover */
+    transform: translateY(-2px); /* Levanta o botão levemente no hover */
+}
+
+.btn-cadastro:active {
+    background-color: rgb(12, 100, 75); /* Altera a cor de fundo ao clicar */
+    transform: translateY(0); /* Remove a elevação ao clicar */
+}
+
+.btn-del {
+    background-color: rgb(170, 11, 11);
+}
+
+.btn-del:hover {
+    background-color: rgb(209, 17, 17); /* Altera a cor de fundo no hover */
+    transform: translateY(-2px); /* Levanta o botão levemente no hover */
+}
+
+.btn-del:active {
+    background-color: rgb(209, 17, 17); /* Altera a cor de fundo ao clicar */
+    transform: translateY(0); /* Remove a elevação ao clicar */
+}
+
+.btn-junto {
+    display: flex;
+    margin: 20px 0px 0px 0px;
+}
+
+.enviar-foto{
+    margin: 10px 0px;
+    display: flex;
+    font-size: 0.875rem;
+    color: #9ca3af; 
+}
+
+.enviar-foto::file-selector-button{
+    border: 0;
+    background: #c3e6cb;
+    color: #4b5563; 
+    font-size: 0.875rem; 
+    font-weight: 500; 
+}
+
+/* Estilos para a mensagem de sucesso */
+.success {
+    color: green;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    border: 1px solid;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+/* Estilos para a mensagem de erro */
+.error {
+    color: red;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border: 1px solid;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+    .input-cad {
+        width: 100%;
+    }
+
+    .juntar-linha {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0px auto;
+        
+    }
+    
+    .input-cad {
+        flex-grow: 1;
+        width: 100%;
+        max-width: 100%;
+        padding: 7px 8px;
+        margin: 10px auto;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+    }
+}

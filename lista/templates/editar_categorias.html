@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+<link href="{% static 'css/cadastro_categorias.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+
+<div class="bloco-total">
+    <div class="bloco-info">
+        <form {% if categoria_info %} action="{% url 'editar_categorias' categoria_info.id %}" {% else %} action="{% url 'editar_marcas' marca_info.id %}"{% endif %} method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="text-foto">
+                <div class="bloco-input-text">
+                    <label class="texto-label">{% if categoria_info %} Nome da categoria:{% else %} Nome da marca: {% endif %}</label>
+                    <input class="input-cad" type="text" name="nome" value="{% if categoria_info %}{{categoria_info.nome}}{% else %} {{marca_info.nome}}{% endif %}">
+                    <input type="file" name="foto-c" class="enviar-foto">
+
+                </div>
+                <img {% if categoria_info %} src="{{ categoria_info.foto.url }}" {% else %} src="{{ marca_info.foto.url }}" {% endif %} width="300" class="edt-foto">
+            </div>
+            <div class="btn-junto">
+                <button class="btn-cadastro"> Editar </button>
+        </form> 
+                <form {% if categoria_info %} action="{% url 'deletar_categorias' categoria_info.id %}" {% else %} action="{% url 'deletar_marcas' marca_info.id %}"{% endif %} method="POST" enctype="multipart/form-data"> {% csrf_token %} 
+                    <button class="btn-del"> Deletar </button>
+                </form>
+            </div>
+    </div>
+</div>
+    
+{% endblock %}

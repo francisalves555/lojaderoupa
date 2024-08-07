@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block 'head' %}
+<link href="{% static 'css/lista_produtos.css '%}" rel="stylesheet">
+{% endblock %}
+
+{% block 'conteudo' %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Data nascimento</th>
+        </tr>
+    </thead>
+<tbody>
+    {% for todos_cliente in todos_clientes %}
+    <tr>
+        <td><a href="{% url 'editar_clientes' todos_cliente.id %}">{{todos_cliente.nome}}</a></td>
+        <td>{{todos_cliente.cpf}}</td>
+        <td>{{todos_cliente.telefone|formato_telefone}}</td>
+        <td>{{todos_cliente.endereco}}</td>
+        <td>{{todos_cliente.nascimento}}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}
