@@ -22,14 +22,14 @@
             <th>Estoque</th>
         </tr>
     </thead>
-<tbody>
-    {% for todos_estoque in todos_estoques %}
-    <tr>
-        <td><a href="{% url 'editar_estoques' todos_estoque.id %}">{{todos_estoque.produto.nome}}</a></td>
-        <td>{{todos_estoque.data}}</td>
-        <td>{{todos_estoque.estoque}}</td>
-    </tr>
-    {% endfor %}
-</tbody>
+    <tbody>
+        {% for todos_estoque in todos_estoques %}
+        <tr>
+            <td><a href="{% url 'editar_estoques' todos_estoque.id %}">{{todos_estoque.produto.nome}}</a></td>
+            <td>{{todos_estoque.data}}</td>
+            <td>{{todos_estoque.estoque}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

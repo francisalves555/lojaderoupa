@@ -24,16 +24,16 @@
             <th>Data nascimento</th>
         </tr>
     </thead>
-<tbody>
-    {% for todos_cliente in todos_clientes %}
-    <tr>
-        <td><a href="{% url 'editar_clientes' todos_cliente.id %}">{{todos_cliente.nome}}</a></td>
-        <td>{{todos_cliente.cpf}}</td>
-        <td>{{todos_cliente.telefone|formato_telefone}}</td>
-        <td>{{todos_cliente.endereco}}</td>
-        <td>{{todos_cliente.nascimento}}</td>
-    </tr>
-    {% endfor %}
-</tbody>
+    <tbody>
+        {% for todos_cliente in todos_clientes %}
+            <tr>
+                <td><a href="{% url 'editar_clientes' todos_cliente.id %}">{{todos_cliente.nome}}</a></td>
+                <td>{{todos_cliente.cpf}}</td>
+                <td>{{todos_cliente.telefone|formato_telefone}}</td>
+                <td>{{todos_cliente.endereco}}</td>
+                <td>{{todos_cliente.nascimento}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

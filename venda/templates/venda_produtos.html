@@ -21,6 +21,7 @@
                 <button class="btn-cadastro">Confirmar </button>
             </div>
             <div class="venda">
+                <form action="{% url 'compra_produtos' %}" method="POST">{% csrf_token %}
                 <table>
                     <thead>
                         <tr>
@@ -32,36 +33,45 @@
                             <th>Cancelar</th>
                         </tr>
                     </thead>
-                    <tbody id="selected-products">
-                        {% for produto in selected_products %}
-                        <tr>
+                    <tbody id="tabela_produtos">
+                        {% for produto in tabela_produtos %}
+                        <tr> 
                             <td>{{ produto.nome }}</td>
                             <td>{{ produto.marca }}</td>
                             <td>{{ produto.codigo }}</td>
                             <td>R$ {{ produto.venda }}</td>
-                            <td>1</td> <!-- Ajuste conforme necessário -->
+                            <td>
+                                <input type="number" name="quantidade" value="1" min="1">
+                                <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                            </td>
                             <td><button class="btn-cancelar" data-prod-id="{{ produto.id }}">Cancelar</button></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <select name="tipo_pagamento">
+                    {% for tipo_pagamento in tipo_pagamentos %}
+                    <option value={{tipo_pagamento.0}}>{{tipo_pagamento.1}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn-cadastro">Cadastrar</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<script src="{% static 'js/venda_produtos.js' %}"></script>
 <script>
-    var availableProducts = [
+    var lista_de_produtos = [
         {% for produto in todos_prod %}
             { label: "{{ produto.nome }}", value: "{{ produto.id }}" },
         {% endfor %}
     ];
-    var addProductUrl = "{% url 'add_product' %}";
-    var getSelectedProductsUrl = "{% url 'get_selected_products' %}";
+    var addProdutoUrl = "{% url 'add_produto' %}";
+    var ProdutoSelecionadoUrl = "{% url 'produto_selecionado' %}";
     var removeProductUrl = "{% url 'remove_product' %}";
     var csrfToken = '{{ csrf_token }}';
 </script>
 
-
+<script src="{% static 'js/venda_produtos.js' %}"></script>
 {% endblock %}
