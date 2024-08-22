@@ -6,6 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link href="{% static 'css/lista_produtos.css '%}" rel="stylesheet">
+<link href="{% static 'css/venda_produtos.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block 'conteudo' %}
@@ -28,33 +29,46 @@
                             <th>Nome</th>
                             <th>Marca</th>
                             <th>Código</th>
-                            <th>Valor</th>
+                            <th>Valor Uni.</th>
+                            <th>Valor Total</th>
                             <th>Quantidade</th>
                             <th>Cancelar</th>
                         </tr>
                     </thead>
                     <tbody id="tabela_produtos">
                         {% for produto in tabela_produtos %}
+                        
                         <tr> 
                             <td>{{ produto.nome }}</td>
                             <td>{{ produto.marca }}</td>
                             <td>{{ produto.codigo }}</td>
                             <td>R$ {{ produto.venda }}</td>
                             <td>
+                                <span id="valor-total-peca"> </span>
+                                <input type="hidden" name="valor_total_peca" value="{{ valor_total_peca }}">
+                            </td>
+                            <td>
                                 <input type="number" name="quantidade" value="1" min="1">
                                 <input type="hidden" name="produto_id" value="{{ produto.id }}">
                             </td>
-                            <td><button class="btn-cancelar" data-prod-id="{{ produto.id }}">Cancelar</button></td>
+                            <td><img src="{% static 'img/delete.png' %}" class="img-cancelar" data-prod-id="{{ produto.id }}" alt="cancelar" style="cursor: pointer;"></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                <select name="tipo_pagamento">
-                    {% for tipo_pagamento in tipo_pagamentos %}
-                    <option value={{tipo_pagamento.0}}>{{tipo_pagamento.1}}</option>
-                    {% endfor %}
-                </select>
-                <button class="btn-cadastro">Cadastrar</button>
+                <div class="juntar-linha">
+                    <div class="bloco-valor-inputs">
+                        Forma de pagamento:
+                        <select class="opcoes" name="tipo_pagamento">
+                            {% for tipo_pagamento in tipo_pagamentos %}
+                                <option value={{tipo_pagamento.0}}>{{tipo_pagamento.1}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <span class="valor-compra" > Valor total da compra <span class="total" id="valor-total">R$ {{ valor_total }}</span></span>
+                    <input type="hidden" name="valor_total_compra" id="valor_total_compra" value="0">
+                    <button type="submit" class="btn-cadastro">Finalizar</button>
+                </div>
                 </form>
             </div>
         </div>
