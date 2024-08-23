@@ -15,7 +15,7 @@ class Produto_venda(models.Model):
     venda = models.ForeignKey(Venda, related_name='itens_venda', on_delete=models.CASCADE)
     quantidade = models.IntegerField()
     valor_unitario = models.DecimalField(max_digits=10, decimal_places=2)
-    valor_total = models.DecimalField(max_digits=10, decimal_places=2)
+    valor_total_peca = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"Produto: {self.produto.nome} - Quantidade: {self.quantidade}"

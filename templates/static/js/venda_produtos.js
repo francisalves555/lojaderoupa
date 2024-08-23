@@ -52,8 +52,7 @@ $(function() {
                      '<td>' + produto.codigo + '</td>' +
                      '<td>R$ ' + produto.venda + '</td>' +
                      '<td>' +
-                        '<span id="valor-total-peca"> </span>' +
-                        '<input type="hidden" name="valor_total_peca" value="{{ valor_total_peca }}"></input>' +
+                        '<input type="text" name="valor_total_peca" value="{{ valor_total_peca }}" readonly>' +
                      '</td>' +
                      '<td>' +
                          '<input type="number" name="quantidade" value="' + quantidade_tela + '" min="1">' +
@@ -82,9 +81,8 @@ $(function() {
             var valor_total_peca = valor_unidade * quantidade;
             
             // Atualiza o valor total do produto na linha
-            $row.find('td').eq(4).text('R$ ' + valor_total_peca.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            $row.find('input[name="valor_total_peca"]').val(valor_total_peca.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
             
-            $row.find('input[name="valor_total_peca"]').val(valor_total_peca)
             valor_total_compra += valor_total_peca;
         });
         
@@ -111,27 +109,4 @@ $(function() {
             }
         });
     });
-});
-
-document.querySelector('form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Impede o envio automático do formulário para inspecionar os dados
-    const formData = new FormData(this);
-    
-    // Exibe todos os valores do formulário no console
-    for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-    }
-
-    // Envia o formulário depois de inspecionar os dados
-    this.submit();
-});
-
-$('form').on('submit', function(e) {
-    e.preventDefault(); // Impede o envio automático do formulário
-
-    // Serializa o formulário em um array e exibe os dados no console
-    console.log($(this).serializeArray());
-
-    // Envia o formulário depois de inspecionar os dados
-    $(this).unbind('submit').submit(); // Remove o evento preventDefault e envia o formulário
 });

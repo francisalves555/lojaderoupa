@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from cadastros.models import Produtos
-from .models import Pagamento
+from .models import Pagamento, Venda, Produto_venda
 from decimal import Decimal
 
 selected_products = []
@@ -79,9 +79,7 @@ def clear_selected_products(request):
     if 'selected_products' in request.session:
         del request.session['selected_products']
 
-    if 'valor_total' in request.session:
-        del request.session['valor_total']
-    return HttpResponse("Selected products cleared.")
+    return render(request, 'venda_produtos.html')
 
 def compra_produtos(request):
     if request.method == 'POST':
@@ -90,16 +88,43 @@ def compra_produtos(request):
         tipo_pagamento = request.POST.get('tipo_pagamento')
         valor_total_compra = request.POST.get('valor_total_compra')
         valor_total_pecas = request.POST.getlist('valor_total_peca')
+        data = request.POST.get('data')
+        valor_pago = request.POST.get('valor_pago')
 
-        print(valor_total_compra)
-        print(tipo_pagamento)
+        valor_total_compra = Decimal(valor_total_compra.replace('R$', '').replace('.', '').replace(',', '.').strip())  
+        valor_pago = Decimal(valor_pago.replace('R$', '').replace('.', '').replace(',', '.').strip())
+
+        valor_total_pecas = [
+            Decimal(valor.replace('R$', '').replace('.', '').replace(',', '.').strip())
+            for valor in valor_total_pecas
+            ]
+
+        id_venda = Venda(
+            data = data,
+            valor_total = valor_total_compra,
+        )
+        id_venda.save()
+
+        id_pagamento = Pagamento(
+            venda = id_venda,
+            tipo_pagamento = tipo_pagamento,
+            valor_pago = valor_pago,
+        )
+        id_pagamento.save()
 
         for produto_id, quantidade, valor_total_peca in zip(produto_ids, quantidades, valor_total_pecas):
             produto = Produtos.objects.get(id=produto_id)
+            produto_valor = produto.valor
 
-            print(produto)
-            print(quantidade)
-            print(valor_total_peca)
-        return HttpResponse('ok')
+            id_produto = Produto_venda(
+                produto = produto,
+                venda = id_venda,
+                quantidade = quantidade,
+                valor_unitario = produto_valor,
+                valor_total_peca = valor_total_peca,
+            )
+            id_produto.save()
+
+        return redirect('clear_selected_products')
 
     return HttpResponse(status=405)
